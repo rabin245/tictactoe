@@ -5,79 +5,81 @@ class GameFunction extends ChangeNotifier {
 
   BuildContext context;
   bool ohTurn = true; //first player is O
-  List<String> displayExOh = ['', '', '', '', '', '', '', '', ''];
-  int ohScore = 0;
-  int exScore = 0;
+  List<String> _displayExOh = ['', '', '', '', '', '', '', '', ''];
+  int _ohScore = 0;
+  int _exScore = 0;
   int filledBoxes = 0;
 
   void tapped(index) {
-    if (ohTurn && displayExOh[index] == '') {
-      displayExOh[index] = 'o';
+    if (ohTurn && _displayExOh[index] == '') {
+      _displayExOh[index] = 'o';
       filledBoxes += 1;
-    } else if (!ohTurn && displayExOh[index] == '') {
-      displayExOh[index] = 'x';
+      ohTurn = !ohTurn;
+    } else if (!ohTurn && _displayExOh[index] == '') {
+      _displayExOh[index] = 'x';
       filledBoxes += 1;
+      ohTurn = !ohTurn;
     }
-    ohTurn = !ohTurn;
+
     _checkWinner();
     notifyListeners();
   }
 
   void _checkWinner() {
     // checks 1st row
-    if (displayExOh[0] == displayExOh[1] &&
-        displayExOh[0] == displayExOh[2] &&
-        displayExOh[0] != '') {
-      _showWinDialog(displayExOh[0]);
+    if (_displayExOh[0] == _displayExOh[1] &&
+        _displayExOh[0] == _displayExOh[2] &&
+        _displayExOh[0] != '') {
+      _showWinDialog(_displayExOh[0]);
     }
 
     // checks 2nd row
-    else if (displayExOh[3] == displayExOh[4] &&
-        displayExOh[3] == displayExOh[5] &&
-        displayExOh[3] != '') {
-      _showWinDialog(displayExOh[3]);
+    else if (_displayExOh[3] == _displayExOh[4] &&
+        _displayExOh[3] == _displayExOh[5] &&
+        _displayExOh[3] != '') {
+      _showWinDialog(_displayExOh[3]);
     }
 
     // checks 3rd row
-    else if (displayExOh[6] == displayExOh[7] &&
-        displayExOh[6] == displayExOh[8] &&
-        displayExOh[6] != '') {
-      _showWinDialog(displayExOh[6]);
+    else if (_displayExOh[6] == _displayExOh[7] &&
+        _displayExOh[6] == _displayExOh[8] &&
+        _displayExOh[6] != '') {
+      _showWinDialog(_displayExOh[6]);
     }
 
     // checks 1st column
-    else if (displayExOh[0] == displayExOh[3] &&
-        displayExOh[0] == displayExOh[6] &&
-        displayExOh[0] != '') {
-      _showWinDialog(displayExOh[0]);
+    else if (_displayExOh[0] == _displayExOh[3] &&
+        _displayExOh[0] == _displayExOh[6] &&
+        _displayExOh[0] != '') {
+      _showWinDialog(_displayExOh[0]);
     }
 
     // checks 2nd column
-    else if (displayExOh[1] == displayExOh[4] &&
-        displayExOh[1] == displayExOh[7] &&
-        displayExOh[1] != '') {
-      _showWinDialog(displayExOh[1]);
+    else if (_displayExOh[1] == _displayExOh[4] &&
+        _displayExOh[1] == _displayExOh[7] &&
+        _displayExOh[1] != '') {
+      _showWinDialog(_displayExOh[1]);
     }
 
     // checks 3rd column
-    else if (displayExOh[2] == displayExOh[5] &&
-        displayExOh[2] == displayExOh[8] &&
-        displayExOh[2] != '') {
-      _showWinDialog(displayExOh[2]);
+    else if (_displayExOh[2] == _displayExOh[5] &&
+        _displayExOh[2] == _displayExOh[8] &&
+        _displayExOh[2] != '') {
+      _showWinDialog(_displayExOh[2]);
     }
 
     // checks diagonal
-    else if (displayExOh[6] == displayExOh[4] &&
-        displayExOh[6] == displayExOh[2] &&
-        displayExOh[6] != '') {
-      _showWinDialog(displayExOh[6]);
+    else if (_displayExOh[6] == _displayExOh[4] &&
+        _displayExOh[6] == _displayExOh[2] &&
+        _displayExOh[6] != '') {
+      _showWinDialog(_displayExOh[6]);
     }
 
     // checks diagonal
-    else if (displayExOh[0] == displayExOh[4] &&
-        displayExOh[0] == displayExOh[8] &&
-        displayExOh[0] != '') {
-      _showWinDialog(displayExOh[0]);
+    else if (_displayExOh[0] == _displayExOh[4] &&
+        _displayExOh[0] == _displayExOh[8] &&
+        _displayExOh[0] != '') {
+      _showWinDialog(_displayExOh[0]);
     } else if (filledBoxes == 9) {
       _showDrawDialog();
     }
@@ -104,15 +106,15 @@ class GameFunction extends ChangeNotifier {
     );
 
     if (winner == 'o') {
-      ohScore += 1;
+      _ohScore += 1;
     } else if (winner == 'x') {
-      exScore += 1;
+      _exScore += 1;
     }
   }
 
   void _clearBoard() {
     for (int index = 0; index < 9; index++) {
-      displayExOh[index] = '';
+      _displayExOh[index] = '';
     }
 
     filledBoxes = 0;
@@ -138,5 +140,13 @@ class GameFunction extends ChangeNotifier {
         );
       },
     );
+  }
+
+  int get ohScore => _ohScore;
+
+  int get exScore => _exScore;
+
+  String displayExOh(int index) {
+    return _displayExOh[index];
   }
 }

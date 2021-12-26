@@ -20,11 +20,12 @@ class _IntroScreenState extends State<IntroScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
+              flex: 1,
               child: Padding(
-                padding: const EdgeInsets.only(top: 100.0),
+                padding: const EdgeInsets.only(top: 40.0),
                 child: Text(
                   'TIC TAC TOE',
-                  style: myNewFontWhite.copyWith(fontSize: 30),
+                  style: myNewFontWhite.copyWith(fontSize: 24),
                 ),
               ),
             ),

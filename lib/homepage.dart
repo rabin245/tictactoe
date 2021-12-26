@@ -3,14 +3,9 @@ import 'package:tictactoe_game/const_fonts.dart';
 import 'game_functions.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GameFunction>(
@@ -26,43 +21,28 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10, 40, 20, 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Player O', style: myNewSmallFontWhite),
-                          const SizedBox(height: 20),
-                          Text(game.ohScore.toString(),
-                              style: myNewSmallFontWhite),
-                        ],
-                      ),
+                      child:
+                          PlayerScore(player: 'Player O', score: game.ohScore),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 40, 10, 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Player X', style: myNewSmallFontWhite),
-                          const SizedBox(height: 20),
-                          Text(game.exScore.toString(),
-                              style: myNewSmallFontWhite),
-                        ],
-                      ),
+                      child:
+                          PlayerScore(player: 'Player X', score: game.exScore),
                     ),
                   ],
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: 9,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        setState(() {
-                          game.tapped(index);
-                        });
+                        game.tapped(index);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -70,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: Center(
                           child: Text(
-                            game.displayExOh[index],
+                            game.displayExOh(index),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 40,
@@ -94,6 +74,28 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PlayerScore extends StatelessWidget {
+  const PlayerScore({
+    required this.player,
+    required this.score,
+    Key? key,
+  }) : super(key: key);
+  final String player;
+  final int score;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(player, style: myNewSmallFontWhite),
+        const SizedBox(height: 20),
+        Text(score.toString(), style: myNewSmallFontWhite),
+      ],
     );
   }
 }
