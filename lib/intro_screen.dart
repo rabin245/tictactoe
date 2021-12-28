@@ -21,11 +21,13 @@ class _IntroScreenState extends State<IntroScreen> {
           children: [
             Expanded(
               flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 40.0),
-                child: Text(
-                  'TIC TAC TOE',
-                  style: myNewFontWhite.copyWith(fontSize: 24),
+              child: FittedBox(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 60.0),
+                  child: Text(
+                    'TIC TAC TOE',
+                    style: myNewFontWhite.copyWith(fontSize: 28),
+                  ),
                 ),
               ),
             ),
